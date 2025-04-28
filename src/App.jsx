@@ -110,7 +110,7 @@ const App = () => {
     }
   }
   const filter = data.filter((e)=> {
-    let ele = []
+    let ele = {}
     if(search){
       ele = search.toUpperCase().includes(e.name.toUpperCase())
     }
