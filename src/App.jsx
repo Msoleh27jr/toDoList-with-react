@@ -37,6 +37,7 @@ import {
 
 const App = () => {
   const [data, setData] = useState([]);
+  const [search , setSearch] = useState('')
   const [editName , setEditName] = useState('')
   const [editDesc , setEditDesc] = useState('')
   const [idx , setIdx] = useState(null)
@@ -108,6 +109,13 @@ const App = () => {
       console.error(error);
     }
   }
+  const filter = data.filter((e)=> {
+    let ele = []
+    if(search){
+      ele = search.toUpperCase().includes(e.name.toUpperCase())
+    }
+    return ele
+  })
   return (
     <div className="max-w-[1900px] m-auto relative p-5">
       <Dialog>
@@ -130,7 +138,7 @@ const App = () => {
           </DialogHeader>
         </DialogContent>
       </Dialog>
-
+      <input type="text" className="border-1 mx-5 py-1 px-2 md:w-[300px]" value={search} onChange={(e)=> setSearch(e.target.value)} placeholder="Search User" />
       <button onClick={handleClick} className='bg-blue-600 py-1.5 px-2 text-white font-bold rounded-[5px] w-[70px] absolute right-[50px]'>Dark</button>
       <Table className="w-[1800px] m-auto mt-10">
         <TableCaption>A list of your recent invoices.</TableCaption>
@@ -144,7 +152,7 @@ const App = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((e) => {
+          {filter.map((e) => {
             return (
               <TableRow className="">
                 <TableCell className="font-medium flex items-center gap-2.5">
